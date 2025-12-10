@@ -87,9 +87,9 @@ void booklistWindow::filterBooks(const QString &text)
         escaped.replace("'", "''");
 
         // Filter matches ISBN or Book Title
-        model->setFilter(QString("author LIKE '%%1%' OR book LIKE '%%1%' OR ISBN LIKE '%%1%'")
-                             .arg(escaped));
+        model->setFilter(QString("ISBN LIKE '%%1%' OR book LIKE '%%1%'").arg(escaped));
     }
     model->select(); // refresh the model
 }
+
 
