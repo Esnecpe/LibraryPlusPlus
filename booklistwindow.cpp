@@ -40,9 +40,9 @@ booklistWindow::booklistWindow(const QString &username, QWidget *parent)
     model->setQuery("SELECT ISBN, book, author, CASE WHEN is_borrowed = 1 THEN 'Yes' ELSE 'No' END AS status FROM books", libraryDB);
 
     // Set headers
-    model->setHeaderData(0, Qt::Horizontal, "ISBN");
+    model->setHeaderData(0, Qt::Horizontal, "Author");
     model->setHeaderData(1, Qt::Horizontal, "Book Title");
-    model->setHeaderData(2, Qt::Horizontal, "Author");
+    model->setHeaderData(2, Qt::Horizontal, "ISBN");
     model->setHeaderData(3, Qt::Horizontal, "Borrowed?");
 
     // Assign model to tableView
@@ -87,7 +87,9 @@ void booklistWindow::filterBooks(const QString &text)
         escaped.replace("'", "''");
 
         // Filter matches ISBN or Book Title
-        model->setFilter(QString("ISBN LIKE '%%1%' OR book LIKE '%%1%'").arg(escaped));
+        model->setFilter(QString("author LIKE '%%1%' OR book LIKE '%%1%' OR ISBN LIKE '%%1%'")
+                             .arg(escaped));
     }
     model->select(); // refresh the model
 }
+
